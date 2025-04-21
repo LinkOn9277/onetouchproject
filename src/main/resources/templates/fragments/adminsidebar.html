@@ -51,7 +51,7 @@
                 </a>
                 <!--호텔관리-->
                 <!--시스템어드민-->
-                <a class="nav-link" href="#"
+                <a class="nav-link" href="/members/hotel/create"
                    th:if="${role.name() == 'SYSTEMADMIN'}">
                     <div class="sb-nav-link-icon"><i class="fas fa-file"></i></div>
                     호텔 관리
@@ -95,8 +95,8 @@
                 </a>
                 <div class="collapse" id="collapseStore" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link"  href="/members/menu/list">가맹점 관리</a>
-                        <a class="nav-link" href="/members/menu/register">가맹주 관리</a>
+                        <a class="nav-link"  href="#">가맹점 관리</a>
+                        <a class="nav-link" href="#">가맹주 관리</a>
                     </nav>
                 </div>
                 <!--고객서비스-->
@@ -109,8 +109,8 @@
                 </a>
                 <div class="collapse" id="collapseService" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link"  href="/members/menu/list">룸 케어</a>
-                        <a class="nav-link" href="/members/menu/register">문의사항 관리</a>
+                        <a class="nav-link"  href="#">룸 케어</a>
+                        <a class="nav-link" href="/qna/list">문의사항 관리</a>
                     </nav>
                 </div>
                 <!--오더관리-->
@@ -139,7 +139,9 @@
                 <div class="sb-sidenav-menu-heading">dashboard</div>
 
                 <!--정산 페이지 미완으로 추후 수정!!!!-->
-                <a class="nav-link" href="/payment/list">
+
+                <a class="nav-link" href="/members/payment/list">
+
                     <div class="sb-nav-link-icon"><i class="fas fa-square-poll-vertical"></i></div>
                     매출 정산보기
                 </a>
