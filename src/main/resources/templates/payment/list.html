@@ -7,6 +7,8 @@
 </head>
 <body>
 
+
+
 <form id="paymentForm">
     <h1>정산 내역 조회</h1>
 
@@ -68,28 +70,75 @@
     <thead>
     <tr>
         <th>결제 ID</th>
+        <th>등록일시</th>
         <th>결제 일시</th>
         <th>결제 방식</th>
         <th>센터명</th>
         <th>지점명</th>
         <th>호텔명</th>
         <th>매장명</th>
-        <th>객실 번호</th>
         <th>결제 금액</th>
         <th>정산 여부</th>
     </tr>
     </thead>
     <tbody>
-    <!-- AJAX로 받아온 데이터가 여기에 채워짐 -->
+    <!-- AJAX 데이터 삽입 -->
     </tbody>
 </table>
 
+<!-- 총 결제 금액과 미결제 금액을 나란히 배치 -->
+<div style="display: flex; justify-content: space-between; margin-top: 20px;">
+    <!-- 미결제 금액 왼쪽에 배치 -->
+    <div id="unpaidPrice" style="font-weight: bold; font-size: 18px;">
+        미결제 금액: 0원
+    </div>
+    <!-- 총 결제 금액 오른쪽에 배치 -->
+    <div id="totalPrice" style="font-weight: bold; font-size: 18px;">
+        총 결제 금액: 0원
+    </div>
+</div>
+
 <script>
+
+    // 이번 달 자동 조회 함수
+    function loadCurrentMonth() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth(); // 0-based (1월 = 0)
+
+        // 시작일: 1일
+        const startDate = new Date(year, month, 2).toISOString().slice(0, 10);
+
+        // 종료일: 다음 달 0일 == 이번 달 마지막 날
+        const endDate = new Date(year, month + 1, 1).toISOString().slice(0, 10);
+
+        // 날짜 input에 기본값 세팅
+        $('#startDate').val(startDate);
+        $('#endDate').val(endDate);
+
+        // 자동 조회용 데이터 구성
+        const queryData = {
+            type: $('#type').val(), // 기본은 "STORE"
+            startDate: startDate,
+            endDate: endDate,
+            orderType: '',       // 전체
+            paidCheck: ''        // 전체
+        };
+
+        console.log("자동 조회 데이터:", queryData);
+        loadPayment(queryData);
+    }
+
+    // 페이지 로드 시 이번 달 자동 조회
+    $(document).ready(function () {
+        loadCurrentMonth();
+    });
+
 
     // 공통 함수 : 결제 정산 목록 조회
     function loadPayment(data) {
         $.ajax({
-            url: '/api/payment/allData',  // 수정된 API URL
+            url: '/api/payment/totalPrice',  // 수정된 API URL
             type: 'GET',
             data: data,
             success: function (response) {
@@ -97,16 +146,21 @@
 
                 $('#paymentResults tbody').empty();
 
+                let totalPrice = 0      // 총 결제 금액
+                let unpaidPrice = 0     // 미정산 금액
+
                 if (response.length === 0) {
-                    $('#paymentResults tbody').append('<tr><td colspan="10">정산 데이터가 없습니다.</td></tr>');
+                    $('#paymentResults tbody').append('<tr><td colspan="10">정산 데이터가 없습니다.</td></tr>')
+                    $('#totalPrice').text('총 결제 금액: 0원')
+                    $('#unpaidPrice').text('미결제 금액: 0원')
                     return;
                 }
 
                 response.forEach(function (payment) {
-                    let paidCheckText = payment.checkPaid === 'paid' ? '정산 완료' : '미정산';          // 수정된 필드 사용
-                    let orderTypeText = payment.orderType === '선결제' ? '선결제' : '후결제';            // 수정된 결제 방식
-                    let roomNumberText = payment.roomNumber ? payment.roomNumber : '-';
+                    let paidCheckText = payment.checkPaid === 'paid' ? '정산 완료' : '미정산';
+                    let orderTypeText = payment.orderType === '선결제' ? '선결제' : '후결제';
                     let payDateText = payment.payDateTime ? payment.payDateTime.replace('T', ' ') : '-';
+                    let regDateText = payment.regTime ? new Date(payment.regTime).toLocaleDateString("ko-KR") : '-';
 
 
                     payment.ordersDTOList.forEach(function (order) {
@@ -116,23 +170,30 @@
                         let branchName = order.storeDTO.hotelDTO.branchDTO.name
                         let centerName = order.storeDTO.hotelDTO.branchDTO.centerDTO.name
 
+                        totalPrice += Number(order.totalPrice)
+
                         let str = `<tr>
-                             <td>${payment.totalId}</td>
-                             <td>${payDateText}</td>
-                             <td>${orderTypeText}</td>
-                             <td>${centerName}</td>
-                             <td>${branchName}</td>
-                             <td>${hotelName}</td>
-                             <td>${storeName}</td>
-                             <td>${roomNumberText}</td>
-                             <td>${Number(order.totalPrice).toLocaleString()}원</td>
-                             <td>${paidCheckText}</td>
-                           </tr>`;
+                                     <td>${payment.totalId}</td>
+                                     <td>${regDateText}</td>
+                                     <td>${payDateText}</td>
+                                     <td>${orderTypeText}</td>
+                                     <td>${centerName}</td>
+                                     <td>${branchName}</td>
+                                     <td>${hotelName}</td>
+                                     <td>${storeName}</td>
+                                     <td>${Number(order.totalPrice).toLocaleString()}원</td>
+                                     <td>${unpaidPrice}</td>
+                                     <td>${paidCheckText}</td>
+                                   </tr>`;
 
                           $('#paymentResults tbody').append(str);
 
                     })
                 })
+
+                $('#totalPrice').text(`총 결제 금액: ${totalPrice.toLocaleString()}원`)
+                $('#unpaidPrice').text(`미결제 금액: ${unpaidPrice.toLocaleString()}원`)
+
             },
             error: function (xhr, status, error) {
                 console.log("에러 발생:", xhr, status, error);
@@ -148,14 +209,14 @@
             }
         })
     }
-
+    
     $('#loadBtn').click(function () {
         $.ajax({
-            url: "/api/payments/allData",  // 수정된 API URL
+            url: "/api/payments/allData",
             method: 'GET',
             data: {
                 priceMonth: "202504",   // 여기에 실제로 원하는 날짜를 입력
-                hotelId: 1,             // 필요한 매장 ID
+                centerId: 1,             // 필요한 매장 ID
                 isPaid: true            // 결제 여부
             },
             success: function (response) {
@@ -178,8 +239,58 @@
             orderType: $('#orderType').val(),
             paidCheck: $('#paidCheck').val()
         }
-        console.log("전송 데이터:", queryData) // 확인용 로그
-        loadPayment(queryData)               // 필터 조건에 맞는 데이터를 조회
+        console.log("전송 데이터:", queryData)
+        loadPayment(queryData)
+    })
+    
+    let adminInfo = {}
+    
+    function adminOrganization(callback) {
+
+        $.ajax({
+
+            url: '/api/payment/adminInfo',
+            method: 'get',
+            success:function (response) {
+                console.log("사용자 조직 정보", response)
+                adminInfo = response
+                if (callback) callback()
+            },
+            error:function (error) {
+                console.log("조직 정보 로드 실패", error)
+            }
+
+        })
+
+    }
+
+    // 자동 조회 시, 조직 정보 로드 후 실행
+    $(document).ready(function () {
+        adminOrganization(() => {
+            loadCurrentMonth()
+        })
+    })
+
+    // 조회 버튼 클릭 시 필터 기반 조회
+    $('#paymentForm').on('submit', function (e) {
+        e.preventDefault()
+
+        let queryData = {
+            type: $('#type').val(),
+            startDate: $('#startDate').val(),
+            endDate: $('#endDate').val(),
+            orderType: $('#orderType').val(),
+            paidCheck: $('#paidCheck').val()
+        }
+
+        if (adminInfo.centerId) queryData.centerId = adminInfo.centerId
+        if (adminInfo.branchId) queryData.branchId = adminInfo.branchId
+        if (adminInfo.hotelId) queryData.hotelId = adminInfo.hotelId
+        if (adminInfo.storeId) queryData.storeId = adminInfo.storeId
+
+        console.log('전송 데이터 : ', queryData)
+        loadPayment(queryData)
+
     })
 
 </script>
