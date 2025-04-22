@@ -35,14 +35,13 @@
                     <!--카드 제목 구분선-->
                     <hr class="hrMain">
 
-                    <!--<pre> 코드는 <>를 문자 그대로 쓸 수 있게 해준다-->
-                    <table class="table">
+                    <table class="table align-middle">
 
                         <thead>
                         <th class="col-1">#</th>
-                        <th class="col-3">이름</th>
+                        <th class="col-2">이름</th>
                         <th class="col-7">설명</th>
-                        <th class="col-1">수정</th>
+                        <th class="col-2">수정</th>
                         </thead>
 
                         <tbody>
@@ -56,19 +55,13 @@
                                 <td th:text="${list.content}"></td>
                                 <td><button class="btn btn-outline-primary" id="delBtn"  th:value="${list.id}">삭제</button></td>
                             </tr>
-
                         </th:block>
-
-
-
                         </tbody>
 
                     </table>
                 </div>
             </div>
-
         </div>
-
     </main>
 
     <!--스크립트 시작 -->

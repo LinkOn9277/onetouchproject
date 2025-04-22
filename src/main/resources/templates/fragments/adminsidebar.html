@@ -23,7 +23,7 @@
                 <a class="nav-link" href="/members/account/accounthub"
                 th:if="${role.name() == 'SUPERADMIN' or role.name() == 'SYSTEMADMIN' or role.name() == 'ADMIN'}">
                     <div class="sb-nav-link-icon"><i class="fas fa-circle-user"></i></div>
-                    계정 승인 목록
+                    계정 승인 관리
                 </a>
                 <!--가맹점 관리-->
                 <!--스토어어드민-->
@@ -38,8 +38,9 @@
 
                 <!--본사관리-->
                 <!--시스템어드민, 수퍼어드민-->
-                <a class="nav-link" href="/members/center/create"
-                   th:if="${role.name() == 'SUPERADMIN' or role.name() == 'SYSTEMADMIN'}">
+                <a class="nav-link" href="/members/center/list"
+                   th:if="${role.name() == 'SUPERADMIN'}">
+<!--                   th:if="${role.name() == 'SUPERADMIN' or role.name() == 'SYSTEMADMIN'}">-->
                     <div class="sb-nav-link-icon"><i class="fas fa-hotel"></i></div>
                     본사 관리<br>
                 </a>
