@@ -53,8 +53,8 @@
             <label for="paidCheck">정산 여부:</label>
             <select id="paidCheck" name="paidCheck">
                 <option value="">전체</option>
-                <option value="Y">정산 완료</option>
-                <option value="N">미정산</option>
+                <option value="paid">정산 완료</option>
+                <option value="none">미정산</option>
             </select>
         </div>
     </div>
@@ -83,14 +83,14 @@
     <thead>
     <tr>
         <th>결제 ID</th>
-        <th>결제 금액</th>
         <th>결제 일시</th>
         <th>결제 방식</th>
-        <th>매장명</th>
-        <th>호텔명</th>
-        <th>지점명</th>
         <th>센터명</th>
+        <th>지점명</th>
+        <th>호텔명</th>
+        <th>매장명</th>
         <th>객실 번호</th>
+        <th>결제 금액</th>
         <th>정산 여부</th>
     </tr>
     </thead>
@@ -101,78 +101,105 @@
         </div>
 
 
-        <script>
+<script>
 
-            // 공통 함수 : 결제 정산 목록 조회
-            function loadPayment(data) {
+    // 공통 함수 : 결제 정산 목록 조회
+    function loadPayment(data) {
+        $.ajax({
+            url: '/api/payment/allData',  // 수정된 API URL
+            type: 'GET',
+            data: data,
+            success: function (response) {
+                console.log("정산 데이터 조회 완료", response);
 
-                $.ajax({
+                $('#paymentResults tbody').empty();
 
-                    url: '/api/payment/allDate',
-                    type: 'get',
-                    data: data,
-                    success: function (response) {
-                        console.log("정산 데이터 조회 완료", response);
+                if (response.length === 0) {
+                    $('#paymentResults tbody').append('<tr><td colspan="10">정산 데이터가 없습니다.</td></tr>');
+                    return;
+                }
 
-                        $('#paymentResults tbody').empty();
+                response.forEach(function (payment) {
+                    let paidCheckText = payment.checkPaid === 'paid' ? '정산 완료' : '미정산';          // 수정된 필드 사용
+                    let orderTypeText = payment.orderType === '선결제' ? '선결제' : '후결제';            // 수정된 결제 방식
+                    let roomNumberText = payment.roomNumber ? payment.roomNumber : '-';
+                    let payDateText = payment.payDateTime ? payment.payDateTime.replace('T', ' ') : '-';
 
-                        if (response.length === 0) {
-                            $('#paymentResults tbody').append('<tr><td colspan="10">정산 데이터가 없습니다.</td></tr>');
-                            return
-                        }
 
-                        response.forEach(function (payment) {
-                            let paidCheckText = payment.paidCheck ? '정산 완료' : '미정산';
-                            let orderTypeText = payment.orderType === 'paid' ? '선결제' : '후결제';
-                            let roomNumberText = payment.roomNumber ? payment.roomNumber : '-';
-                            let payDateText = payment.payDateTime ? payment.payDateTime.replace('T', ' ') : '-';
+                    payment.ordersDTOList.forEach(function (order) {
 
-                            let str = `<tr>
-                             <td>${payment.id}</td>
-                             <td>${Number(payment.amount).toLocaleString()}원</td>
+                        let storeName = order.storeDTO.name
+                        let hotelName = order.storeDTO.hotelDTO.name
+                        let branchName = order.storeDTO.hotelDTO.branchDTO.name
+                        let centerName = order.storeDTO.hotelDTO.branchDTO.centerDTO.name
+
+                        let str = `<tr>
+                             <td>${payment.totalId}</td>
                              <td>${payDateText}</td>
                              <td>${orderTypeText}</td>
-                             <td>${payment.storeName}</td>
-                             <td>${payment.hotelName}</td>
-                             <td>${payment.branchName}</td>
-                             <td>${payment.centerName}</td>
+                             <td>${centerName}</td>
+                             <td>${branchName}</td>
+                             <td>${hotelName}</td>
+                             <td>${storeName}</td>
                              <td>${roomNumberText}</td>
+                             <td>${Number(order.totalPrice).toLocaleString()}원</td>
                              <td>${paidCheckText}</td>
                            </tr>`;
-                            $('#paymentResults tbody').append(str);
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        if (xhr.status === 400){
-                            console.log("잘못된 요청(400 Error)입니다.");
-                        } else if(xhr.status === 404){
-                            console.log("정산 데이터(404 Error)가 없습니다.");
-                        } else if (xhr.status === 500){
-                            console.log("서버 오류가 발생(500 Error)했습니다.");
-                        } else {
-                            console.log("기타 오류 발생", xhr.responseText);
-                        }
-                    }
 
+                          $('#paymentResults tbody').append(str);
+
+                    })
                 })
-
-            }
-
-            // 조회 버튼 클릭 시 필터 기반 조회
-            $('#paymentForm').on('submit', function (e) {
-                e.preventDefault()
-                let queryData = {
-                    totalId: 1,
-                    type: $('#type').val(),
-                    startDate: $('#startDate').val(),
-                    endDate: $('#endDate').val(),
-                    orderType: $('#orderType').val(),
-                    paidCheck: $('#paidCheck').val()
+            },
+            error: function (xhr, status, error) {
+                console.log("에러 발생:", xhr, status, error);
+                if (xhr.status === 400) {
+                    console.log("잘못된 요청(400 Error)입니다.");
+                } else if (xhr.status === 404) {
+                    console.log("정산 데이터(404 Error)가 없습니다.");
+                } else if (xhr.status === 500) {
+                    console.log("서버 오류가 발생(500 Error)했습니다.");
+                } else {
+                    console.log("기타 오류 발생", xhr.responseText);
                 }
-                loadPayment(queryData)
-            })
+            }
+        })
+    }
 
-        </script>
+    $('#loadBtn').click(function () {
+        $.ajax({
+            url: "/api/payments/allData",  // 수정된 API URL
+            method: 'GET',
+            data: {
+                priceMonth: "202504",   // 여기에 실제로 원하는 날짜를 입력
+                hotelId: 1,             // 필요한 매장 ID
+                isPaid: true            // 결제 여부
+            },
+            success: function (response) {
+                console.log("받은 데이터 : ", response)
+                loadPayment(response)  // 받은 데이터를 이용하여 결제 목록을 불러옴
+            },
+            error: function (xhr, status, error) {
+                console.log("에러 발생:", error)
+            }
+        })
+    })
+
+    // 조회 버튼 클릭 시 필터 기반 조회
+    $('#paymentForm').on('submit', function (e) {
+        e.preventDefault();
+        let queryData = {
+            type: $('#type').val(),
+            startDate: $('#startDate').val(),
+            endDate: $('#endDate').val(),
+            orderType: $('#orderType').val(),
+            paidCheck: $('#paidCheck').val()
+        }
+        console.log("전송 데이터:", queryData) // 확인용 로그
+        loadPayment(queryData)               // 필터 조건에 맞는 데이터를 조회
+    })
+
+</script>
 
     </main>
 </div>
