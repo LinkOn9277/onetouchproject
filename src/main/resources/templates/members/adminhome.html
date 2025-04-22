@@ -21,10 +21,10 @@
             <!--반드시 이 안에서만 작업-->
 
             <!--페이지 제목 명명-->
-            <h3 class="mt-5">어드민 홈</h3>
+            <h3 class="mt-5">HOME</h3>
             <ol class="breadcrumb mb-4">
                 <!--페이지 소제목 명명-->
-                <li class="breadcrumb-item active" th:text="'환영합니다, '+${member.name}+' 님'"></li>
+                <li class="text-secondary" th:text="'환영합니다, '+${member.name}+' 님'"></li>
             </ol>
 
             <!--기본 카드 양식-->
@@ -62,7 +62,7 @@
                     <div class="row mb-4">
                         <label class="col-sm-2 col-form-label form-label">플레이스홀더&작은글</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="staticMembersPhone" maxlength="13" placeholder="원래있던번호">
+                            <input type="text" class="form-control" id="staticMembersPhone" maxlength="13" placeholder="원래있던번호">
                             <div class="text-sm mt-1">
                                 전화번호를 입력하면 자동으로 하이폰이 들어갑니다. (01012345678 > 010-1234-5678)
                             </div>
@@ -90,6 +90,19 @@
             </div>
         </div>
     </main>
+    <script>
+        document.getElementById("staticMembersPhone").addEventListener("input", function (e) {
+            let value = e.target.value.replace(/\D/g, ""); // 숫자만 남김
+
+            if (value.length > 3 && value.length <= 7) {
+                value = value.replace(/(\d{3})(\d+)/, "$1-$2");
+            } else if (value.length > 7) {
+                value = value.replace(/(\d{3})(\d{4})(\d+)/, "$1-$2-$3");
+            }
+
+            e.target.value = value;
+        });
+    </script>
 
     <!--푸터 절대 수정 금지!!!!-->
     <!--푸터-->

@@ -6,10 +6,6 @@
 >
     <head>
         <title>델리나잇</title>
-
-        <!--별도 css 필요할 시 아래로 추가-->
-        <!--어디서 그대로 가져오는거 아니면 클래스 이름 잘 붙여주고
-        styles.css에 작성할것-->
     </head>
 
     <body>
@@ -21,9 +17,10 @@
                     <!--반드시 이 아래에서만 작업-->
 
                     <!--페이지 이름-->
-                    <h3 class="mt-5">Super Admin 승인</h3>
+                    <h3 class="mt-5">본사 관리자 계정 승인 내역</h3>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">큰페이지 〉 중간페이지 〉 작은페이지</li>
+                        <a href="/members/account/adminhome" class="breadcrumb-item active">홈</a>
+                        <a href="/members/account/listB" class="breadcrumb-item active no-click">계정 승인 관리</a>
                     </ol>
 
                     <!--텍스트 박스-->
@@ -46,8 +43,11 @@
                                    </li>
                                </ul>
 
+                           <!--카드 제목 구분선-->
+                           <hr class="hrMain">
+
                            <!--작업 공간-->
-                           <table class="table">
+                           <table class="table align-middle">
 
                                <thead>
                                <th scope="col">#</th>
@@ -55,6 +55,7 @@
                                <th scope="col">이메일</th>
                                <th scope="col">핸드폰번호</th>
                                <th scope="col">권한</th>
+                               <th scope="col">처리여부</th>
                                <th scope="col">승인여부</th>
                                </thead>
 
@@ -62,7 +63,7 @@
                                <th:block  th:each="list:${paging}">
                                    <tr>
                                        <th scope="row offset-4" th:text="${list.id}"></th>
-                                       <td><a class="readbtn" th:data-num="${list.id}" th:href="@{/board/read(id=${list.id})}">
+                                       <td><a class="readbtn" style="text-decoration: none" th:data-num="${list.id}" th:href="@{/board/read(id=${list.id})}">
                                            [[${list.name}]]
                                        </a>
                                        </td>
@@ -72,14 +73,16 @@
 
                                        <td th:text="${list.role}"></td>
 
-                                       <td th:if="${list.status.name() == 'VALID'}" class="aa" th:text="승인완료"></td>
-                                       <td th:if="${list.status.name() == 'NOTVALID'}" class="aa" th:text="반려"></td>
-                                       <td th:if="${list.status.name() == 'WAIT'}" style="display: flex; justify-content: space-between">
-                                           <div th:text="승인대기중"></div>
-                                           <button class="btn btn-primary" th:value="${list.id}" id="approveBtn">승인</button>
-                                           <button class="btn btn-primary" th:value="${list.id}" id="DisapproveBtn">반려</button>
+                                       <td th:if="${list.status.name() == 'WAIT'}" class="text-danger fw-bold">대기중</td>
+                                       <td th:if="${list.status.name() == 'VALID' or list.status.name() == 'NOTVALID'}" class="text-secondary">처리됨</td>
 
+                                       <td th:if="${list.status.name() == 'WAIT'}" class="d-flex">
+                                           <button class="btn btn-primary" th:value="${list.id}" id="approveBtn">승인</button>
+                                           <button class="btn btn-primary offset-0" th:value="${list.id}" id="DisapproveBtn">반려</button>
                                        </td>
+
+                                       <td th:if="${list.status.name() == 'VALID'}" class="text-primary" th:text="승인완료"></td>
+                                       <td th:if="${list.status.name() == 'NOTVALID'}" class="text-danger" th:text="반려"></td>
 
 
 
@@ -93,7 +96,7 @@
 
                            </table>
 
-                           <div th:if="${!paging.isEmpty()}">
+                           <div class="mt-5" th:if="${!paging.isEmpty()}">
                                <ul class="pagination justify-content-center">
                                    <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                                        <a class="page-link" th:href="@{|?page=${paging.number > 1 ? paging.number - 1 : 0}|}">

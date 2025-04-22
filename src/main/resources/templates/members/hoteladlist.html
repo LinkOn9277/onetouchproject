@@ -21,9 +21,10 @@
             <!--반드시 이 아래에서만 작업-->
 
             <!--페이지 이름-->
-            <h3 class="mt-5">Hotel Admin 승인</h3>
+            <h3 class="mt-5">호텔 관리자 계정 승인 내역</h3>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">큰페이지 〉 중간페이지 〉 작은페이지</li>
+                <a href="/members/account/adminhome" class="breadcrumb-item active">홈</a>
+                <a href="#" class="breadcrumb-item active no-click">계정 승인 관리</a>
             </ol>
 
             <!--텍스트 박스-->
@@ -46,8 +47,11 @@
                         </li>
                     </ul>
 
+                    <!--카드 제목 구분선-->
+                    <hr class="hrMain">
+
                     <!--작업 공간-->
-                    <table class="table">
+                    <table class="table align-middle">
 
                         <thead>
                         <th scope="col">#</th>
@@ -93,7 +97,7 @@
 
                     </table>
 
-                    <div th:if="${!paging.isEmpty()}">
+                    <div class="mt-5" th:if="${!paging.isEmpty()}">
                         <ul class="pagination justify-content-center">
                             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                                 <a class="page-link" th:href="@{|?page=${paging.number > 1 ? paging.number - 1 : 0}|}">
@@ -111,54 +115,18 @@
                                     <span>다음</span>
                                 </a>
                             </li>
-                        </ul>8819
+                        </ul>
                     </div>
                     <!--페이징처리 끝-->
 
                 </div>
             </div>
 
-            <!--알럿창-->
-            <div class="card custom-shadow mb-4">
-                <div class="card-header">
-                    <!--아이콘-->
-                    <!--카드헤더 제목 넣는곳-->
-                    <i class="fas fa-table me-1"></i>
-
-                    알럿창
-                </div>
-                <div class="card-body">
-                    <!--카드바디 내용 넣는곳-->
-                    <button class="btn btn-primary m-2" id="alertStart">Alert 실행</button>
-                    <button class="btn btn-gray m-2" id="confirmStart">Confirm 실행</button>
-                    <button class="btn btn-success m-2" id="promptStart">Prompt 실행</button>
-                    <button class="btn btn-danger m-2" id="toastStart">Toast 실행</button>
-                    <button class="btn btn-warning m-2" id="ajaxStart">Ajax 실행 (깃헙 아이디 검색)</button>
-                </div>
-            </div>
-
-            <!--카드-->
-            <div class="card custom-shadow mb-4">
-                <div class="card-header">
-                    <!--아이콘-->
-                    <!--카드헤더 제목 넣는곳-->
-                    <i class="fas fa-table me-1"></i>
-
-                    card title
-                </div>
-                <div class="card-body">
-                    <!--카드바디 내용 넣는곳-->
-                    <div>
-                        내용내용내용내용내용내용내용
-                    </div>
-                </div>
-            </div>
         </div>
     </main>
 
     <!--스크립스-->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-
+    <!--제이쿼리 스크립트는 이미 콘피그 파일에 있기 때문에 삭제했습니다-->
     <script th:inline="javascript">
         let aa = $(".aa");
 

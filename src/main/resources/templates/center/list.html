@@ -6,58 +6,56 @@
 >
 <head>
     <title>델리나잇</title>
-
-
-
-    <!--별도 css 필요할 시 아래로 추가-->
-    <!--어디서 그대로 가져오는거 아니면 클래스 이름 잘 붙여주고
-    styles.css에 작성할것-->
 </head>
 
 <body>
 <!--이 줄 div layout:fragment명과 id명 절대 수정 금지!!!!-->
 <div layout:fragment="adminContent" id="layoutSidenav_content">
     <main>
-        <div class="container-fluid px-4">
+        <div class="container-fluid px-5">
             <!--내용 넣는 곳-->
             <!--반드시 이 아래에서만 작업-->
 
             <!--페이지 이름-->
-            <h1 id="test" class="mt-4">Center List</h1>
+            <h3 id="test" class="mt-5">등록된 본사 목록</h3>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Dashboard-subheading</li>
+                <a href="/members/account/adminhome" class="breadcrumb-item active">홈</a>
+                <a href="#" class="breadcrumb-item active no-click">본사 관리</a>
             </ol>
 
             <!--텍스트 박스-->
             <div class="card custom-shadow mb-4">
                 <div class="card-body">
-                    <!--<pre> 코드는 <>를 문자 그대로 쓸 수 있게 해준다-->
-                    <table class="table">
+                    <!--카드 제목-->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-4 fw-bold">List</h5>
+                        <a href="/members/center/create" class="btn btn-primary">본사추가 +</a>
+                    </div>
+
+                    <!--카드 제목 구분선-->
+                    <hr class="hrMain">
+
+                    <table class="table align-middle">
 
                         <thead>
-                        <th scope="col">#</th>
-                        <th scope="col">이름</th>
-                        <th scope="col">설명</th>
+                        <th class="col-1">#</th>
+                        <th class="col-2">이름</th>
+                        <th class="col-7">설명</th>
+                        <th class="col-2">수정</th>
                         </thead>
 
                         <tbody>
                         <th:block  th:each="list:${centerDTOList}">
                             <tr>
-                                <th scope="row offset-4" th:text="${list.id}"></th>
+                                <th th:text="${list.id}"></th>
                                 <td><a class="readbtn" th:data-num="${list.id}" th:href="@{/board/read(id=${list.id})}">
                                     [[${list.name}]]
                                 </a>
                                 </td>
                                 <td th:text="${list.content}"></td>
-                                <td><button class="btn btn-primary" id="delBtn"  th:value="${list.id}">삭제</button></td>
-
-
+                                <td><button class="btn btn-outline-primary" id="delBtn"  th:value="${list.id}">삭제</button></td>
                             </tr>
-
                         </th:block>
-
-
-
                         </tbody>
 
                     </table>
