@@ -42,7 +42,7 @@ public class HotelController {
     public String createProc(HotelDTO hotelDTO) {
         hotelService.create(hotelDTO);
 
-        return "hotel/create";
+        return "redirect:/members/hotel/listA";
     }
 
     @GetMapping("/listA")

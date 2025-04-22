@@ -1,14 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}"
+>
 <head>
-    <meta charset="UTF-8">
-    <title>정산 내역 조회</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>델리나잇</title>
 </head>
-<body>
 
-<form id="paymentForm">
-    <h1>정산 내역 조회</h1>
+<body>
+<!--이 줄 div layout:fragment명과 id명 절대 수정 금지!!!!-->
+<div layout:fragment="adminContent" id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-5">
+            <!--내용 넣는 곳-->
+            <!--반드시 이 아래에서만 작업-->
+
+            <!--페이지 이름-->
+            <h3 id="test" class="mt-5">정산 대쉬보드</h3>
+            <ol class="breadcrumb mb-4">
+                <a href="/members/account/adminhome" class="breadcrumb-item active">홈</a>
+                <a href="#" class="breadcrumb-item active no-click">매출 정산보기</a>
+            </ol>
+
+            <form id="paymentForm">
 
     <div class="row">
         <!-- 날짜 필터 -->
@@ -58,7 +73,7 @@
     </div>
 
     <!-- 조회 버튼 -->
-    <button type="submit">조회</button>
+    <button type="submit" class="btn btn-primary">조회</button>
 </form>
 
 <hr>
@@ -83,6 +98,8 @@
     <!-- AJAX로 받아온 데이터가 여기에 채워짐 -->
     </tbody>
 </table>
+        </div>
+
 
 <script>
 
@@ -184,5 +201,7 @@
 
 </script>
 
+    </main>
+</div>
 </body>
 </html>
