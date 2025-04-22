@@ -12,11 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
@@ -63,7 +59,12 @@ public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
     where s.id = :storeId""")
     List<PaymentEntity> findStoreForDate(@Param("storeId") Long storeId);
 
-
+    @Query("""
+    select p from PaymentEntity p
+    join p.ordersEntityList o
+    join o.storeEntity s
+    where s.id = :storeId and p.paymentTime between :startDate and :endDate""")
+    List<PaymentEntity> storePayData (@Param("storeId") Long storeId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
 
 }

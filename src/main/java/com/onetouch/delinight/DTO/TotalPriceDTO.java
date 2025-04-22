@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SettlementDTO {
+public class TotalPriceDTO {
 
     private BigDecimal totalAmount;         // 총 결제 금액
     private int paymentCount;               // 전체 결제 건수

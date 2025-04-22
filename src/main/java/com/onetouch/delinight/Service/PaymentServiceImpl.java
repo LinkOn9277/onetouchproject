@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -79,7 +80,7 @@ public class PaymentServiceImpl implements PaymentService{
 
 
     @Override
-    public SettlementDTO settlementCenter(Long centerId) {
+    public TotalPriceDTO settlementCenter(Long centerId) {
         log.info("정산 로직 시작 - centerId : {}",centerId);
 
         // TEST CENTER_ID 직접 조회
@@ -91,7 +92,7 @@ public class PaymentServiceImpl implements PaymentService{
         log.info("결제 내역 조회 성공 - 건수 : {}",paymentEntityList.size());
 
         if (paymentEntityList == null || paymentEntityList.isEmpty()) {
-            return SettlementDTO.builder()
+            return TotalPriceDTO.builder()
                     .totalAmount(BigDecimal.ZERO)
                     .paymentCount(0)
                     .unpaidCount(0L)
@@ -115,7 +116,7 @@ public class PaymentServiceImpl implements PaymentService{
                         .filter(dto -> dto.getPaidCheckType() == PaidCheck.none).count();
 
         // 5. 결과 리턴
-        SettlementDTO result = SettlementDTO.builder()
+        TotalPriceDTO result = TotalPriceDTO.builder()
                 .totalAmount(totalAmount)
                 .paymentCount(paymentDTOList.size())
                 .unpaidCount(unpaidCount)
@@ -147,7 +148,7 @@ public class PaymentServiceImpl implements PaymentService{
                                         .paidCheck(payment.getPaidCheck())
                                         .totalAmount(payment.getTotalAmount())
                                         .paymentTime(payment.getRegTime())
-                                        .ordersEntityList(List.of(order))
+                                          .ordersEntityList(List.of(order))
                                         .build()
                         );
                     }
@@ -242,6 +243,14 @@ public class PaymentServiceImpl implements PaymentService{
                 })
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public TotalPriceDTO StoreTotalPrice(Long storeId, LocalDateTime startDate, LocalDateTime endDate) {
+
+        return null;
+    }
+
+
     /*@Override
     public List<PaymentDTO> findAllDate(Long totalId, PayType type) {
 
@@ -361,6 +370,9 @@ public class PaymentServiceImpl implements PaymentService{
             throw new IllegalArgumentException("유효하지 않은 정산 타입입니다.");
         }
 */ // 이거 지우면 안됨 무조건 지우면안됨 ㄹㅇ 지우면 안됨
+
+
+
 
 
 

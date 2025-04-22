@@ -58,6 +58,12 @@ $(function () {
         $(".cartList").empty();
         let totalPrice = 0;
         let groupedCarts = {};
+        if (carts.length === 0) {
+            // 카트가 비어있으면 문구 표시
+            $(".cartList").append('<div style="text-align: center; margin-top: 20px; font-size: 1.2em; color: gray;">현재 장바구니가 비어있습니다</div>');
+            return; // 더 이상 진행할 필요 없음
+        }
+
 
         carts.forEach(function (cart) {
             let storeName = cart.menuDTO.storeDTO.name;

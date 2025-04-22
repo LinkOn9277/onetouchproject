@@ -2,7 +2,7 @@ package com.onetouch.delinight.Controller;
 
 import com.onetouch.delinight.Constant.PayType;
 import com.onetouch.delinight.DTO.PaymentDTO;
-import com.onetouch.delinight.DTO.SettlementDTO;
+import com.onetouch.delinight.DTO.TotalPriceDTO;
 import com.onetouch.delinight.Service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -49,10 +49,10 @@ public class PaymentRestController {
     }
 
     @GetMapping("/centerDate/center/{centerId}")
-    public ResponseEntity<SettlementDTO> centerDate(@PathVariable Long centerId){
+    public ResponseEntity<TotalPriceDTO> centerDate(@PathVariable Long centerId){
         log.info("{}", centerId);
-        SettlementDTO settlementDTO = paymentService.settlementCenter(centerId);
-        return ResponseEntity.ok(settlementDTO);
+        TotalPriceDTO totalPriceDTO = paymentService.settlementCenter(centerId);
+        return ResponseEntity.ok(totalPriceDTO);
     }
 
 }

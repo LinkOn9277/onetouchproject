@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/payment")
+@RequestMapping("/members/payment")
 @RequiredArgsConstructor
 public class PaymentController {
 
