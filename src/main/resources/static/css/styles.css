@@ -11128,6 +11128,11 @@ body {
   z-index: 1038;
   transform: translateX(-225px);
 }
+
+#layoutSidenav_content {
+  scrollbar-gutter: stable;
+}
+
 #layoutSidenav #layoutSidenav_content {
   position: relative;
   display: flex;
