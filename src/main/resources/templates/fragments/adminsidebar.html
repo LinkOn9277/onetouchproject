@@ -23,7 +23,7 @@
                 <a class="nav-link" href="/members/account/accounthub"
                 th:if="${role.name() == 'SUPERADMIN' or role.name() == 'SYSTEMADMIN' or role.name() == 'ADMIN'}">
                     <div class="sb-nav-link-icon"><i class="fas fa-circle-user"></i></div>
-                    계정 관리
+                    계정 승인 목록
                 </a>
                 <!--가맹점 관리-->
                 <!--스토어어드민-->
@@ -45,7 +45,7 @@
                 </a>
                 <!--지사관리-->
                 <!--수퍼어드민-->
-                <a class="nav-link" href="#" th:if="${role.name() == 'SUPERADMIN'}">
+                <a class="nav-link" href="/members/branch/listA" th:if="${role.name() == 'SUPERADMIN'}">
                     <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
                     지사 관리
                 </a>
@@ -66,7 +66,7 @@
                 </a>
                 <div class="collapse" id="collapseSuperHotel" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="/members/hotel/listA">호텔 관리</a>
+                        <a class="nav-link" href="/members/hotel/listA">호텔 목록</a>
                         <a class="nav-link" href="#">직원 관리</a>
                     </nav>
                 </div>

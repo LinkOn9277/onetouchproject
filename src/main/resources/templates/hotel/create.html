@@ -4,33 +4,75 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}"
 >
-<head>
-    <title>델리나잇</title>
+  
+    <head>
+        <title>델리나잇</title>
+    </head>
+    <body>
+        <!--layout:fragment명과 id명 절대 수정 금지!!!!-->
+        <div layout:fragment="adminContent" id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-5">
+                    <!--작업 영역-->
+                    <!--반드시 이 안에서만 작업-->
 
+                    <!--페이지 제목 명명-->
+                    <h3 class="mt-5">새 호텔 등록</h3>
+                    <ol class="breadcrumb mb-4">
+                        <!--페이지 소제목 명명-->
+                        <a href="/members/account/adminhome" class="breadcrumb-item active">홈</a>
+                        <a href="/#" class="breadcrumb-item active no-click">호텔 관리</a>
+                        <a href="/members/hotel/listA" class="breadcrumb-item active">호텔 목록</a>
+                    </ol>
 
+                    <!--기본 카드 양식-->
+                    <div class="card custom-shadow mb-4">
+                        <div class="card-body">
+                            <!--카드 제목-->
+                            <h5 class="mb-4 fw-bold">기본 정보</h5>
 
-    <!--별도 css 필요할 시 아래로 추가-->
-    <!--어디서 그대로 가져오는거 아니면 클래스 이름 잘 붙여주고
-    styles.css에 작성할것-->
-</head>
+                            <!--카드 제목 구분선-->
+                            <hr class="hrMain">
 
-<body>
-<!--이 줄 div layout:fragment명과 id명 절대 수정 금지!!!!-->
-<div layout:fragment="adminContent" id="layoutSidenav_content">
-    <main>
-        <div class="container-fluid px-5">
-            <!--내용 넣는 곳-->
-            <!--반드시 이 아래에서만 작업-->
+                            <form action="/members/hotel/create" method="post">
+                                <div class="row mb-4">
+                                    <label class="col-sm-2 col-form-label form-label">호텔명</label>
+                                    <div class="col-sm-3">
+                                        <input name="name" type="text" class="form-control">
+                                    </div>
+                                </div>
 
-            <!--페이지 이름-->
-            <h1 id="test" class="mt-5">Hotel 등록페이지</h1>
-<form action="/hotel/create" method="post">
-    호텔명 : <input name="name">
-    호텔설명 : <input name="content">
-    <button>전송</button>
-</form>
+                                <div class="row mb-4">
+                                    <label class="col-sm-2 col-form-label form-label">호텔 설명</label>
+                                    <div class="col-sm-5">
+                                        <textarea name="content" class="form-control" rows="1" style="overflow:hidden; resize:none;" oninput="autoResize(this)"></textarea>
+                                    </div>
+                                </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        </div></main></div>
-</body>
+                                <div class="text-center mt-5">
+                                    <button class="btn btn-primary me-2 px-4">확인</button>
+                                    <a href="/members/account/adminhome" class="btn btn-gray px-4">취소</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!--스크립트 영역-->
+            <!--추가할 스크립트가 있다면 이곳에서 <script>태그 열고 작업-->
+            <!--기존 config 파일과 겹칠 수 있으므로 class나 id는 직접 작명해주세요-->
+            <script>
+                function autoResize(textarea) {
+                    textarea.style.height = 'auto'; // 높이 초기화
+                    textarea.style.height = textarea.scrollHeight + 'px'; // 글자 수에 맞게 높이 조정
+                }
+            </script>
+
+            <!--푸터-->
+            <!--콘텐츠 내부에 포함된 형식이므로 첨삭 엄금!!!-->
+            <div th:replace="~{fragments/adminfooter::adminFooter}"></div>
+        </div>
+    </body>
+
 </html>
