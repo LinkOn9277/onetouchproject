@@ -25,7 +25,9 @@ public class PaymentDTO {
 
     private Long totalId;               // 정산 ID
     private String priceMonth;          // 정산 연월
+    private String type;                // 정산타입
     private String totalPriceData;      // 정산일
+    private String unpaidPriceData;     // 미정산
     private PaidCheck checkPaid;        // 정산상태
     private LocalDateTime regTime;      // 등록일
     private LocalDateTime updateTime;   // 수정일

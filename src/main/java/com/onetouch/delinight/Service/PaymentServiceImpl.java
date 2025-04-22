@@ -49,40 +49,40 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
-    public List<PaymentDTO> paymentByCriteria(String priceMonth, Long storeId, Boolean isPaid) {
-
-        log.info("priceMonth : {}, storeId : {}, isPaid : {}", priceMonth, storeId, isPaid);
+    public List<PaymentDTO> paymentByCriteria(String priceMonth, String type, Long storeId, Boolean isPaid) {
 
         // 1. 쿼리 DSL 조회
-        List<PaymentDTO> paymentDTOList = customPaymentRepository.findPaymentByCriteria(priceMonth, storeId, isPaid);
+        List<PaymentDTO> paymentDTOList = customPaymentRepository.findPaymentByCriteria(priceMonth, type, storeId, isPaid);
 
-        log.debug("Fetched {} PaymentDTO(s) from repository.", paymentDTOList.size());
+        log.info("레포지토리에서 {}개의 PaymentDTO를 조회함.", paymentDTOList.size());
 
         // 2. 정산 계산식 처리 (예시: 주문별 총합 계산)
-        log.info("Starting calculation of total amount for each PaymentDTO.");
+        log.info("각 PaymentDTO의 총 정산 금액 계산 시작.");
 
         return paymentDTOList.stream().map(paymentDTO -> {
-            log.debug("Processing PaymentDTO with totalId: {}", paymentDTO.getTotalId());
+            log.info("totalId: {}인 PaymentDTO 처리 중...", paymentDTO.getTotalId());
 
             // 각 정산 내역에 대해 총액 계산
             long totalAmount = 0;
+            long unpaidPriceData = 0;
 
-            // 주문별 총액 계산 (PaymentDTO에 포함된 OrdersDTO 리스트 순회)
+
             for (OrdersDTO ordersDTO : paymentDTO.getOrdersDTOList()) {
-                log.debug("Processing OrderDTO with id: {} and price: {}", ordersDTO.getId(), ordersDTO.getTotalPrice());
 
-                // 예시: 주문 상태가 '배송완료'인 경우만 총액에 포함
-                if (ordersDTO.getOrdersStatus() == OrdersStatus.DELIVERED) {
-                    log.debug("OrderDTO with id: {} is DELIVERED. Adding totalPrice to PaymentDTO.", ordersDTO.getId());
-                    totalAmount += ordersDTO.getTotalPrice();  // 주문 총액 더하기
-                } else {
-                    log.debug("OrderDTO with id: {} is not DELIVERED. Skipping this order.", ordersDTO.getId());
+                OrdersStatus status = ordersDTO.getOrdersStatus();
+                Long orderPrice = ordersDTO.getTotalPrice();
+
+                if (status == OrdersStatus.DELIVERED){
+                    totalAmount += orderPrice;
+                }else {
+                    unpaidPriceData += orderPrice;
                 }
             }
 
             // 계산된 총액을 PaymentDTO에 설정
-            log.debug("Calculated total amount for PaymentDTO with totalId: {} is: {}", paymentDTO.getTotalId(), totalAmount);
-            paymentDTO.setTotalPriceData(String.valueOf(totalAmount));  // PaymentDTO에 총액 필드를 설정 (String 타입으로 설정)
+            log.info("totalId: {}인 PaymentDTO의 최종 총액은 {}원입니다.", paymentDTO.getTotalId(), totalAmount);
+            paymentDTO.setTotalPriceData(String.valueOf(totalAmount));          // 정산된 총액
+            paymentDTO.setUnpaidPriceData(String.valueOf(unpaidPriceData));     // 미정산 금액
 
             // 계산된 PaymentDTO 반환
             return paymentDTO;

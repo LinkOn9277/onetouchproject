@@ -17,7 +17,7 @@ public interface PaymentService {
     public List<OrdersDTO> readOrders(Long paymentId);
 
 
-    public List<PaymentDTO> paymentByCriteria(String priceMonth, Long storeId, Boolean isPaid);
+    public List<PaymentDTO> paymentByCriteria(String priceMonth, String type, Long storeId, Boolean isPaid);
 
 
 
