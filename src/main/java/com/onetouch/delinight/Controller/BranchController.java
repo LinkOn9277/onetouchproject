@@ -35,7 +35,7 @@ public class BranchController {
         branchService.create(branchDTO);
 
 
-        return "branch/create";
+        return "redirect:/members/branch/listA";
     }
 
     @GetMapping("/listA")

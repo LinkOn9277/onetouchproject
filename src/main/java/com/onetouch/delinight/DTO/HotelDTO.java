@@ -7,12 +7,6 @@
  *********************************************************************/
 package com.onetouch.delinight.DTO;
 
-import com.onetouch.delinight.Entity.BranchEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter
@@ -30,5 +24,11 @@ public class HotelDTO {
     private String content;
 
     private BranchDTO branchDTO;
+
+
+    public HotelDTO setBranchDTO(BranchDTO branchDTO){
+        this.branchDTO = branchDTO;
+        return this;
+    }
 
 }

@@ -802,6 +802,10 @@ progress {
   width: 100%;
 }
 
+.offset-0 {
+  margin-left: 4%;
+}
+
 .offset-1 {
   margin-left: 8.33333333%;
 }
@@ -11128,6 +11132,11 @@ body {
   z-index: 1038;
   transform: translateX(-225px);
 }
+
+#layoutSidenav_content {
+  scrollbar-gutter: stable;
+}
+
 #layoutSidenav #layoutSidenav_content {
   position: relative;
   display: flex;
