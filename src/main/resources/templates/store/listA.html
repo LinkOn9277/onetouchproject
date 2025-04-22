@@ -6,32 +6,32 @@
 >
 <head>
     <title>델리나잇</title>
-
-
-
-    <!--별도 css 필요할 시 아래로 추가-->
-    <!--어디서 그대로 가져오는거 아니면 클래스 이름 잘 붙여주고
-    styles.css에 작성할것-->
 </head>
 
 <body>
 <!--이 줄 div layout:fragment명과 id명 절대 수정 금지!!!!-->
 <div layout:fragment="adminContent" id="layoutSidenav_content">
     <main>
-        <div class="container-fluid px-4">
-            <!--내용 넣는 곳-->
-            <!--반드시 이 아래에서만 작업-->
-
+        <div class="container-fluid px-5">
             <!--페이지 이름-->
-            <h1 id="test" class="mt-4">Store</h1>
+            <h3 id="test" class="mt-5">등록된 가맹점 목록</h3>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Dashboard-subheading</li>
+                <a href="/members/account/adminhome" class="breadcrumb-item active">홈</a>
+                <a href="#" class="breadcrumb-item active no-click">가맹점 관리</a>
             </ol>
 
             <!--텍스트 박스-->
             <div class="card custom-shadow mb-4">
                 <div class="card-body">
-                    <!--<pre> 코드는 <>를 문자 그대로 쓸 수 있게 해준다-->
+                    <!--카드 제목-->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-4 fw-bold">List</h5>
+                        <a href="/members/store/create" class="btn btn-primary">가맹점추가 +</a>
+                    </div>
+
+                    <!--카드 제목 구분선-->
+                    <hr class="hrMain">
+
                     <table class="table">
 
                         <thead>
@@ -66,41 +66,6 @@
                 </div>
             </div>
 
-            <!--알럿창-->
-            <div class="card custom-shadow mb-4">
-                <div class="card-header">
-                    <!--아이콘-->
-                    <!--카드헤더 제목 넣는곳-->
-                    <i class="fas fa-table me-1"></i>
-
-                    알럿창
-                </div>
-                <div class="card-body">
-                    <!--카드바디 내용 넣는곳-->
-                    <button class="btn btn-primary m-2" id="alertStart">Alert 실행</button>
-                    <button class="btn btn-secondary m-2" id="confirmStart">Confirm 실행</button>
-                    <button class="btn btn-success m-2" id="promptStart">Prompt 실행</button>
-                    <button class="btn btn-danger m-2" id="toastStart">Toast 실행</button>
-                    <button class="btn btn-warning m-2" id="ajaxStart">Ajax 실행 (깃헙 아이디 검색)</button>
-                </div>
-            </div>
-
-            <!--카드-->
-            <div class="card custom-shadow mb-4">
-                <div class="card-header">
-                    <!--아이콘-->
-                    <!--카드헤더 제목 넣는곳-->
-                    <i class="fas fa-table me-1"></i>
-
-                    card title
-                </div>
-                <div class="card-body">
-                    <!--카드바디 내용 넣는곳-->
-                    <div>
-                        내용내용내용내용내용내용내용
-                    </div>
-                </div>
-            </div>
         </div>
 
     </main>

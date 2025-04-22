@@ -96,7 +96,7 @@
 
     <div class="card md-4">
         <div class="card-body">
-            <form action="/qna/update" method="post" enctype="multipart/form-data" th:object="${qnaDTO}">
+            <form action="/members/qna/update" method="post" enctype="multipart/form-data" th:object="${qnaDTO}">
                 <div class="card">
                     <div class="card-header">수정</div>
                     <div class="card-body">
@@ -128,7 +128,7 @@
 
             </form>
 
-            <form action="/qna/delete" method="post" id="qna-delete-form">
+            <form action="/members/qna/delete" method="post" id="qna-delete-form">
                 <input hidden readonly name="id" th:value="${qnaDTO.id}">
             </form>
 

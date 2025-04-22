@@ -18,12 +18,12 @@
 <!--이 줄 div layout:fragment명과 id명 절대 수정 금지!!!!-->
 <div layout:fragment="adminContent" id="layoutSidenav_content">
     <main>
-        <div class="container-fluid px-4">
+        <div class="container-fluid px-5">
             <!--내용 넣는 곳-->
             <!--반드시 이 아래에서만 작업-->
 
             <!--페이지 이름-->
-            <h1 id="test" class="mt-4">Hotel Check-In</h1>
+            <h3 id="test" class="mt-5">Hotel Check-In</h3>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active">호텔 체크인</li>
             </ol>
@@ -164,16 +164,10 @@
                                 <td class="trContainer" style="display: none" >
                                     <button th:data-checkinid="${list.id}" class="plusBtn btn btn-primary" style="display: inline">+</button>
                                     <button th:data-checkinid="${list.id}" class="minusBtn btn btn-primary" style="display: none">-</button>
-
                                 </td>
-
                             </tr>
 
-
                         </th:block>
-
-
-
 
                         </tbody>
 
@@ -181,41 +175,6 @@
                 </div>
             </div>
 
-            <!--알럿창-->
-            <div class="card custom-shadow mb-4">
-                <div class="card-header">
-                    <!--아이콘-->
-                    <!--카드헤더 제목 넣는곳-->
-                    <i class="fas fa-table me-1"></i>
-
-                    알럿창
-                </div>
-                <div class="card-body">
-                    <!--카드바디 내용 넣는곳-->
-                    <button class="btn btn-primary m-2" id="alertStart">Alert 실행</button>
-                    <button class="btn btn-secondary m-2" id="confirmStart">Confirm 실행</button>
-                    <button class="btn btn-success m-2" id="promptStart">Prompt 실행</button>
-                    <button class="btn btn-danger m-2" id="toastStart">Toast 실행</button>
-                    <button class="btn btn-warning m-2" id="ajaxStart">Ajax 실행 (깃헙 아이디 검색)</button>
-                </div>
-            </div>
-
-            <!--카드-->
-            <div class="card custom-shadow mb-4">
-                <div class="card-header">
-                    <!--아이콘-->
-                    <!--카드헤더 제목 넣는곳-->
-                    <i class="fas fa-table me-1"></i>
-
-                    card title
-                </div>
-                <div class="card-body">
-                    <!--카드바디 내용 넣는곳-->
-                    <div>
-                        내용내용내용내용내용내용내용
-                    </div>
-                </div>
-            </div>
         </div>
 
     </main>

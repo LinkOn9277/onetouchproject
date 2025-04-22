@@ -16,14 +16,16 @@
             <div class="nav">
 
                 <!--어카운트-->
-                <div class="sb-sidenav-menu-heading">account</div>
+                <div class="sb-sidenav-menu-heading">
+                    account
+                </div>
 
                 <!--계정관리-->
                 <!--시스템어드민, 수퍼어드민, 호텔어드민-->
                 <a class="nav-link" href="/members/account/accounthub"
-                th:if="${role.name() == 'SUPERADMIN' or role.name() == 'SYSTEMADMIN' or role.name() == 'ADMIN'}">
+                   th:if="${role.name() == 'SUPERADMIN' or role.name() == 'SYSTEMADMIN' or role.name() == 'ADMIN'}">
                     <div class="sb-nav-link-icon"><i class="fas fa-circle-user"></i></div>
-                    계정 승인 목록
+                    계정 승인 관리
                 </a>
                 <!--가맹점 관리-->
                 <!--스토어어드민-->
@@ -34,12 +36,15 @@
 
 
                 <!--매니지먼트-->
-                <div class="sb-sidenav-menu-heading">Management</div>
+                <div th:if="${role.name() != 'SYSTEMADMIN'}" class="sb-sidenav-menu-heading">
+                    Management
+                </div>
 
                 <!--본사관리-->
                 <!--시스템어드민, 수퍼어드민-->
-                <a class="nav-link" href="/members/center/create"
-                   th:if="${role.name() == 'SUPERADMIN' or role.name() == 'SYSTEMADMIN'}">
+                <a class="nav-link" href="/members/center/list"
+                   th:if="${role.name() == 'SUPERADMIN'}">
+                    <!--                   th:if="${role.name() == 'SUPERADMIN' or role.name() == 'SYSTEMADMIN'}">-->
                     <div class="sb-nav-link-icon"><i class="fas fa-hotel"></i></div>
                     본사 관리<br>
                 </a>
@@ -48,13 +53,6 @@
                 <a class="nav-link" href="/members/branch/listA" th:if="${role.name() == 'SUPERADMIN'}">
                     <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
                     지사 관리
-                </a>
-                <!--호텔관리-->
-                <!--시스템어드민-->
-                <a class="nav-link" href="/members/hotel/create"
-                   th:if="${role.name() == 'SYSTEMADMIN'}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-file"></i></div>
-                    호텔 관리
                 </a>
                 <!--호텔관리-->
                 <!--수퍼어드민-->
@@ -88,21 +86,21 @@
                 <!--가맹점관리-->
                 <!--호텔어드민-->
                 <a class="nav-link collapsed" href="#" th:if="${role.name() == 'ADMIN'}"
-                data-bs-toggle="collapse" data-bs-target="#collapseStore" aria-expanded="false" aria-controls="collapseStore">
+                   data-bs-toggle="collapse" data-bs-target="#collapseStore" aria-expanded="false" aria-controls="collapseStore">
                     <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
                     가맹점 관리
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseStore" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link"  href="#">가맹점 관리</a>
+                        <a class="nav-link"  href="/members/store/listA">가맹점 목록</a>
                         <a class="nav-link" href="#">가맹주 관리</a>
                     </nav>
                 </div>
                 <!--고객서비스-->
                 <!--호텔어드민-->
                 <a class="nav-link collapsed" href="#" th:if="${role.name() == 'ADMIN'}"
-                data-bs-toggle="collapse" data-bs-target="#collapseService" aria-expanded="false" aria-controls="collapseService">
+                   data-bs-toggle="collapse" data-bs-target="#collapseService" aria-expanded="false" aria-controls="collapseService">
                     <div class="sb-nav-link-icon"><i class="fas fa-headset"></i></div>
                     고객 서비스
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -110,7 +108,7 @@
                 <div class="collapse" id="collapseService" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link"  href="#">룸 케어</a>
-                        <a class="nav-link" href="/qna/list">문의사항 관리</a>
+                        <a class="nav-link" href="/members/qna/list">문의사항 관리</a>
                     </nav>
                 </div>
                 <!--오더관리-->
@@ -121,22 +119,16 @@
                 </a>
                 <!--메뉴관리-->
                 <!--스토어어드민-->
-                <a class="nav-link collapsed" href="#" th:if="${role.name() == 'STOREADMIN'}"
-                   data-bs-toggle="collapse" data-bs-target="#collapseMenu" aria-expanded="false" aria-controls="collapseMenu">
+                <a class="nav-link" th:if="${role.name() == 'STOREADMIN'}" href="/members/menu/list">
                     <div class="sb-nav-link-icon"><i class="fas fa-utensils"></i></div>
                     메뉴 관리
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseMenu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link"  href="/members/menu/list">메뉴 목록보기</a>
-                        <a class="nav-link" href="/members/menu/register">메뉴 등록</a>
-                    </nav>
-                </div>
 
 
                 <!--정산-->
-                <div class="sb-sidenav-menu-heading">dashboard</div>
+                <div class="sb-sidenav-menu-heading">
+                    dashboard
+                </div>
 
                 <!--정산 페이지 미완으로 추후 수정!!!!-->
 
@@ -149,7 +141,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            Deli-Night
+            <div th:text="${member.role}"></div>
         </div>
     </nav>
 </div>
