@@ -8,6 +8,7 @@
 package com.onetouch.delinight.Entity;
 
 
+import com.onetouch.delinight.Constant.OrderType;
 import com.onetouch.delinight.Constant.OrdersStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -55,7 +56,15 @@ public class OrdersEntity {
     private Long totalPrice;
 
     @Enumerated(EnumType.STRING)
+    private OrderType orderType;
+
+    @Enumerated(EnumType.STRING)
     OrdersStatus ordersStatus; // 현 주문 상태
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "payment_id")
+    private PaymentEntity paymentEntity;
 
 
 

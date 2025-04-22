@@ -13,6 +13,7 @@ import com.onetouch.delinight.Constant.PayType;
 import com.onetouch.delinight.Entity.base.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -33,22 +34,31 @@ public class PaymentEntity extends BaseTimeEntity {
     @Column(name = "payment_id")
     private Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "paymentEntity", fetch = FetchType.LAZY)
+    @BatchSize(size = 20)
     private List<OrdersEntity> ordersEntityList;
 
+    @Column(name = "payment_time")
     private LocalDateTime paymentTime;
 
     @Enumerated(EnumType.STRING)
-    OrderType orderType; // 선결제(PAYNOW) or 후결제(PAYLATER)
+    @Column(name = "order_type")
+    OrderType orderType;        // 선결제(PAYNOW) or 후결제(PAYLATER)
 
     @Enumerated(EnumType.STRING)
-    PaidCheck paidCheck;
+    @Column(name = "paid_check")
+    private PaidCheck paidCheck;        // 정산상태
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "pay_type")
     private PayType payType;
 
     @Column(name = "total_amount")
     private BigDecimal totalAmount; // 주문 총 금액
+
+    // 추가 필드
+    @Column(name = "price_month")
+    private String priceMonth;   // 정산 연월
 
 
 }
