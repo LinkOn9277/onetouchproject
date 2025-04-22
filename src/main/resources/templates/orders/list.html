@@ -17,65 +17,85 @@
 <div layout:fragment="adminContent" id="layoutSidenav_content">
     <main>
         <!--내용 넣는 곳-->
-        <div class="container-fluid px-4">
+        <div class="container-fluid px-5">
             <!--페이지 이름-->
-            <h1 class="mt-4">[[${storeDTO.name}]] 주문 리스트</h1>
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#processing"
-                            type="button"
-                            role="tab" aria-controls="home" aria-selected="true">주문 진행 중
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#complete"
-                            type="button" role="tab" aria-controls="profile" aria-selected="false">주문 완료 건
-                    </button>
-                </li>
-            </ul>
+            <h3 class="mt-5">[[${storeDTO.name}]] 주문 리스트</h3>
+            <ol class="breadcrumb mb-4">
+                <!--페이지 소제목 명명-->
+                <li class="breadcrumb-item active"></li>
+            </ol>
+            <!--기본 카드 양식-->
+            <div class="card custom-shadow mb-4">
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#processing"
+                                    type="button"
+                                    role="tab" aria-controls="home" aria-selected="true">주문 진행 중
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#complete"
+                                    type="button" role="tab" aria-controls="profile" aria-selected="false">주문 완료 건
+                            </button>
+                        </li>
+                    </ul>
 
 
-            <div class="tab-content">
-                <div id="processing" class="tab-pane show active">
-                    <table class="table table-striped" style="text-align: center">
-                        <thead>
-                        <tr>
-                            <th scope="col">주문 번호</th>
-                            <th scope="col">호텔 / 방 호수</th>
-                            <th scope="col">주문 시간</th>
-                            <th scope="col">승인 및 조리 시작 시간</th>
-                            <th scope="col">배달 시작 시간</th>
-                            <th scope="col">요청 사항</th>
-                            <th scope="col">주문 메뉴</th>
-                            <th scope="col">주문 상태</th>
-                            <th scope="col">상태 변경</th>
-                        </tr>
-                        </thead>
-                        <tbody class="trWrap">
+                    <div class="tab-content">
+                        <div id="processing" class="tab-pane show active">
+                            <table class="table table-striped" style="text-align: center">
+                                <thead>
+                                <tr>
+                                    <th scope="col">주문 번호</th>
+                                    <th scope="col">호텔 / 방 호수</th>
+                                    <th scope="col">주문 시간</th>
+                                    <th scope="col">승인 및 조리 시작 시간</th>
+                                    <th scope="col">배달 시작 시간</th>
+                                    <th scope="col">요청 사항</th>
+                                    <th scope="col">주문 메뉴</th>
+                                    <th scope="col">주문 상태</th>
+                                    <th scope="col">상태 변경</th>
+                                </tr>
+                                </thead>
+                                <tbody class="trWrap">
 
-                        </tbody>
-                    </table>
-                </div>
-                <div id="complete" class="tab-pane">
-                    <table class="table table-striped" style="text-align: center">
-                        <thead>
-                        <tr>
-                            <th scope="col">주문 번호</th>
-                            <th scope="col">호텔 / 방 호수</th>
-                            <th scope="col">주문 시간</th>
-                            <th scope="col">승인 및 조리 시작 시간</th>
-                            <th scope="col">배달 시작 시간</th>
-                            <th scope="col">배달 완료 시간</th>
-                            <th scope="col">요청 사항</th>
-                            <th scope="col">주문 메뉴</th>
-                        </tr>
-                        </thead>
-                        <tbody class="trWrap2">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="complete" class="tab-pane">
+                            <table class="table table-striped" style="text-align: center">
+                                <thead>
+                                <tr>
+                                    <th scope="col">주문 번호</th>
+                                    <th scope="col">호텔 / 방 호수</th>
+                                    <th scope="col">주문 시간</th>
+                                    <th scope="col">승인 및 조리 시작 시간</th>
+                                    <th scope="col">배달 시작 시간</th>
+                                    <th scope="col">배달 완료 시간</th>
+                                    <th scope="col">요청 사항</th>
+                                    <th scope="col">주문 메뉴</th>
+                                </tr>
+                                </thead>
+                                <tbody class="trWrap2">
 
-                        </tbody>
-                    </table>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+
                 </div>
             </div>
+
+
+
+
+
+
+
         </div>
     </main>
 

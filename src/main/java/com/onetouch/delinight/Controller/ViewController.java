@@ -6,16 +6,14 @@ import com.onetouch.delinight.Entity.MembersEntity;
 import com.onetouch.delinight.Repository.MembersRepository;
 import com.onetouch.delinight.Service.ImageService;
 import com.onetouch.delinight.Service.MenuService;
+import com.onetouch.delinight.Service.QnaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -29,6 +27,7 @@ public class ViewController {
     private final MenuService menuService;
     private final ImageService imageService;
     private final MembersRepository membersRepository;
+    private final QnaService qnaService;
 
 
     @ModelAttribute("membersDTO")
@@ -61,7 +60,7 @@ public class ViewController {
 
     @GetMapping("/register")
     public String register() {
-        return "/admin/menu/register";
+        return "/admin/menu/registerIndex";
     }
 
     @GetMapping("/registerIndex")
@@ -94,5 +93,11 @@ public class ViewController {
         model.addAttribute("imgUrl",imgUrl);
         return "/admin/menu/updateIndex";
     }
+
+
+
+
+
+
 
 }

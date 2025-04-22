@@ -1,7 +1,11 @@
 package com.onetouch.delinight.Controller;
 
+import com.onetouch.delinight.DTO.MembersDTO;
 import com.onetouch.delinight.DTO.QnaDTO;
+import com.onetouch.delinight.Entity.MembersEntity;
+import com.onetouch.delinight.Repository.MembersRepository;
 import com.onetouch.delinight.Repository.QnaRepository;
+import com.onetouch.delinight.Service.MembersService;
 import com.onetouch.delinight.Service.QnaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,10 +23,11 @@ import java.security.Principal;
 @Controller
 @RequiredArgsConstructor
 @Log4j2
-@RequestMapping("/qna")
+@RequestMapping("/members/qna")
 public class QnaController {
     private final QnaService qnaService;
     private final QnaRepository qnaRepository;
+    private final MembersService membersService;
 
     //등록get
     @GetMapping("/register")
@@ -48,15 +53,30 @@ public class QnaController {
     }
     //목록
     @GetMapping("/list")
-    public String list(@PageableDefault(size = 10, page = 0, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+    public String list(@PageableDefault(size = 10, page = 0, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,Principal principal,
                        Model model){
-        Page<QnaDTO> qnaDTOList = qnaService.list(pageable);
-        log.info(qnaDTOList.getPageable().getPageNumber());
+        if (principal == null) {
+            // 로그인 안 된 경우 로그인 페이지로 보내기
+            return "redirect:/users/login";
+        }
+        //로그인한 사장님의 이메일로 Qna리스트 가져오기
+        String email = principal.getName();
+        Page<QnaDTO> qnaDTOList = qnaService.qnaList(pageable, principal.getName());
+        if (qnaDTOList.getPageable().isPaged()){
+            log.info("현재 페이지 번호 : {} ",qnaDTOList.getPageable().getPageNumber());
+        }else {
+            log.info("페이징 정보 없음");
+        }
+
+        if (qnaDTOList.isEmpty()){
+            model.addAttribute("message", "등록된 Qna가 없습니다.");
+        }
         model.addAttribute("qnaDTOList",qnaDTOList);
         log.info(qnaDTOList.getContent());
 
-        return "/qna/list";
+        return "qna/list";
     }
+
 
 
 
@@ -80,7 +100,7 @@ public class QnaController {
     public String updatePost(QnaDTO qnaDTO){
         log.info(qnaDTO);
         qnaService.update(qnaDTO);
-        return "redirect:/qna/read?id="+qnaDTO.getId();
+        return "redirect:/members/qna/read?id="+qnaDTO.getId();
     }
     //삭제
     @PostMapping("/delete")
@@ -88,18 +108,11 @@ public class QnaController {
 
         log.info("히히아이디" + id);
         qnaService.delete(id);
-        return "redirect:/qna/list";
+        return "redirect:/members/qna/list";
     }
 
 
 
-
-
-
-    @GetMapping("/test")
-    public String test(){
-        return "/qna/test";
-    }
 
 
 

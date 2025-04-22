@@ -1,19 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}"
+>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          rel="stylesheet">
+    <title>델리나잇</title>
+
+    <!--css, link, -->
 </head>
 <body>
-<h1>store 등록 페이지</h1>
-<form action="/store/create" method="post">
-    매장명 : <input name="name">
-    매장설명 : <input name="content">
-    <button>전송</button>
-</form>
+<div layout:fragment="adminContent" id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-5">
+            <!--작업 영역-->
+            <!--반드시 이 안에서만 작업-->
+
+            <!--페이지 제목 명명-->
+            <h3 class="mt-5">store 등록 페이지</h3>
+            <ol class="breadcrumb mb-4">
+                <!--페이지 소제목 명명-->
+                <li class="breadcrumb-item active"></li>
+            </ol>
+
+            <!--기본 카드 양식-->
+            <div class="card custom-shadow mb-4">
+                <div class="card-body">
+                    <!--카드 제목-->
+                    <h5 class="mb-4 fw-bold">기본 정보</h5>
+
+                    <!--카드 제목 구분선-->
+                    <hr class="hrMain">
+
+
+                    <form action="/store/create" method="post">
+
+                        <div class="row mb-4">
+                            <label class="col-sm-2 col-form-label form-label">매장명</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <label class="col-sm-2 col-form-label form-label">매장설명</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control">
+
+                            </div>
+                        </div>
+                        <button>전송</button>
+                    </form>
+
+                    <div class="text-center mt-5">
+                        <button class="btn btn-primary me-2 px-4">확인</button>
+                        <button class="btn btn-gray px-4">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!--스크립트 영역-->
+    <!--추가할 스크립트가 있다면 이곳에서 <script>태그 열고 작업-->
+    <!--기존 config 파일과 겹칠 수 있으므로 class나 id는 직접 작명해주세요-->
+
+
+    <!--푸터-->
+    <!--콘텐츠 내부에 포함된 형식이므로 첨삭 엄금!!!-->
+    <div th:replace="~{fragments/adminfooter::adminFooter}"></div>
+</div>
+
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 </body>

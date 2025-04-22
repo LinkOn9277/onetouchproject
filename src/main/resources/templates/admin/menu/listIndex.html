@@ -26,6 +26,7 @@
                                <thead>
                                <th>메뉴번호</th>
                                <th>메뉴</th>
+                               <th>카테고리</th>
                                <th>가격</th>
                                <th>판매여부</th>
                                </thead>
@@ -37,6 +38,7 @@
                                            </a>
                                        </td>
                                        <td th:text="${menuDTO.name}"></td>
+                                       <td th:text="${menuDTO.menu}"></td>
                                        <td th:text="${menuDTO.price}"></td>
                                        <td th:text="${menuDTO.menuStatus}"></td>
                                    </tr>

@@ -23,6 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PaymentDTO {
 
+
     private Long totalId;               // 정산 ID
     private String priceMonth;          // 정산 연월
     private String type;                // 정산타입

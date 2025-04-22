@@ -17,23 +17,71 @@
 <!--이 줄 div layout:fragment명과 id명 절대 수정 금지!!!!-->
 <div layout:fragment="adminContent" id="layoutSidenav_content">
     <main>
-        <div class="container-fluid px-4">
+        <div class="container-fluid px-5">
             <!--내용 넣는 곳-->
             <!--반드시 이 아래에서만 작업-->
 
             <!--페이지 이름-->
-            <h1 id="test" class="mt-4">본사 생성</h1>
 
-            <form action="/members/center/create" class="centerFormData" method="post">
-                본사명 : <input name="name">
-                본사설명 : <input name="content">
-                <button type="submit" class="btn btn-primary">전송</button>
-                <input type="text" class="searchEmail" placeholder="할당할 이메일(superadmin의 이메일)을 입력해주세요.">
-                <button type="button" class="btn btn-primary searchBtn">검색</button>
-            </form>
-            <div class="emailResult">
+            <h3  id="test" class="mt-5">본사 생성</h3>
+            <ol class="breadcrumb mb-4">
+                <!--페이지 소제목 명명-->
+                <li class="breadcrumb-item active"></li>
+            </ol>
+            <div class="card custom-shadow mb-4">
+                <div class="card-body">
+                    <!--카드 제목-->
+                    <h5 class="mb-4 fw-bold">기본 정보</h5>
 
+                    <!--카드 제목 구분선-->
+                    <hr class="hrMain">
+
+
+                    <form action="/members/center/create" class="centerFormData" method="post">
+
+                        <div class="row mb-1">
+
+                            <label class="col-sm-2 col-form-label form-label">본사명</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-4">
+                            <label class="col-sm-2 col-form-label form-label">본사설명</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="content" class="form-control">
+                                <button type="submit" class="btn btn-primary">전송</button>
+
+                            </div>
+                        </div>
+
+
+
+                        <input type="text" class="searchEmail" placeholder="할당할 이메일(superadmin의 이메일)을 입력해주세요.">
+                        <button type="button" class="btn btn-primary searchBtn">검색</button>
+                    </form>
+                    <div class="emailResult">
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="text-center mt-5">
+                        <button class="btn btn-primary me-2 px-4">확인</button>
+                        <button class="btn btn-gray px-4">취소</button>
+                    </div>
+                </div>
             </div>
+
+
         </div>
     </main>
     <script th:inline="javascript">

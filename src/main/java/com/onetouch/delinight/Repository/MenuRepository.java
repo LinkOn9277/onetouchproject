@@ -28,6 +28,7 @@ public interface MenuRepository extends JpaRepository<MenuEntity, Long> {
     public MenuEntity selectEmail(String email);
 
     public List<MenuEntity> findByStoreEntity_Id(Long storeId);
+
     @Query("select m from MenuEntity m where m.storeEntity.id =:id")
     public MenuEntity select2(Long id);
 

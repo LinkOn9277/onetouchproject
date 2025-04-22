@@ -60,7 +60,7 @@ public class MenuController {
 
 
 
-        return "/admin/menu/registerIndex";
+        return "admin/menu/registerIndex";
     }
 
     @PostMapping("/register")
@@ -77,7 +77,8 @@ public class MenuController {
 
         log.info("imgNum 값: " + menuDTO.getImgNum());
 
-        String email = "hansin@a.a";
+
+        String email = principal.getName();
 
 
         menuService.register(menuDTO, email);

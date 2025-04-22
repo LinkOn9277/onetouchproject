@@ -1,169 +1,126 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}"
+>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <title>1:1 문의하기</title>
-    <link rel="stylesheet" href="/css/mobile.css">
+    <title>델리나잇</title>
 
-    <style>
-        body {
-            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 800px;
-            max-height: 700px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 24px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button.submit, input.submit {
-            width: 100%;
-            background-color: var(--jin-gray);
-            color: white;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            margin-top: 20px;
-            cursor: pointer;
-        }
-
-        button.submit:hover, input.submit:hover {
-            background-color: #333;
-        }
-        textarea {
-            height: 120px;
-            resize: vertical;
-        }
-        .file-upload {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-        .file-upload div {
-            width: 30%;
-            height: 80px;
-            background-color: #eee;
-            border: 1px dashed #aaa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 5px;
-            font-size: 24px;
-            color: #999;
-        }
-        .footer-text {
-            font-size: 12px;
-            color: #888;
-            margin-top: 10px;
-            text-align: center;
-        }
-    </style>
-
+    <!--css, link, -->
 </head>
 <body>
+<div layout:fragment="adminContent" id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-5">
+            <!--작업 영역-->
+            <!--반드시 이 안에서만 작업-->
 
-<div class="container">
+            <!--페이지 제목 명명-->
+            <h3 class="mt-5">문의사항</h3>
+            <ol class="breadcrumb mb-4">
+                <!--페이지 소제목 명명-->
+                <li class="breadcrumb-item active"></li>
+            </ol>
 
-    <h2>1:1 문의하기</h2>
+            <!--기본 카드 양식-->
+            <div class="card custom-shadow mb-4">
+                <div class="card-body">
+                    <!--카드 제목-->
+                    <h5 class="mb-4 fw-bold">1:1 문의하기</h5>
 
-    <div class="card mb-4">
-        <div class="card-body">
+                    <div class="card mb-4">
+                        <div class="card-body">
 
-            <table class="table table-striped">
-                <thead>
-                <th>글번호</th>
-                <th>제목</th>
-                <th>내용</th>
-                <th>요청시간</th>
-                <th>답변시간</th>
-                </thead>
-                <th:block th:each="qnaDTO: ${qnaDTOList}">
-                    <tr>
-                        <td>
-                            <a th:href="@{/qna/read(id=${qnaDTO.id})}">
-                                [[${qnaDTO.id}]]
-                            </a>
-                        </td>
-                        <td th:text="${qnaDTO.title}"></td>
-                        <td th:text="${qnaDTO.content}"></td>
-                        <td th:text="${#temporals.format(qnaDTO.regtime,'yy/MM/dd/ HH:mm')}"></td>
-                        <td th:text="${#temporals.format(qnaDTO.updatetime,'yy/MM/dd/ HH:mm')}"></td>
-                    </tr>
-                </th:block>
-
-
-            </table>
+                            <table class="table table-striped">
+                                <thead>
+                                <th>글번호</th>
+                                <th>제목</th>
+                                <th>내용</th>
+                                <th>요청시간</th>
+                                <th>답변시간</th>
+                                </thead>
+                                <th:block th:each="qnaDTO: ${qnaDTOList}">
+                                    <tr>
+                                        <td>
+                                            <a th:href="@{/members/qna/read(id=${qnaDTO.id})}">
+                                                [[${qnaDTO.id}]]
+                                            </a>
+                                        </td>
+                                        <td th:text="${qnaDTO.title}"></td>
+                                        <td th:text="${qnaDTO.content}"></td>
+                                        <td th:text="${#temporals.format(qnaDTO.regtime,'yy/MM/dd/ HH:mm')}"></td>
+                                        <td th:text="${#temporals.format(qnaDTO.updatetime,'yy/MM/dd/ HH:mm')}"></td>
+                                    </tr>
+                                </th:block>
 
 
-            <ul class="pagination justify-content-center">
-                <!-- 처음 페이지 버튼 -->
-                <li class="page-menu" th:classappend="${qnaDTOList.number == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/qna/list?page=0}">처음</a>
-                </li>
+                            </table>
 
-                <!-- 이전 페이지 버튼 -->
-                <li class="page-menu" th:classappend="${!qnaDTOList.hasPrevious()} ? 'disabled'">
-                    <a class="page-link" th:href="@{/qna/list?page={prev}(prev=${qnaDTOList.number - 1})}">이전</a>
-                </li>
 
-                <!-- 현재 페이지 기준 앞 4개, 뒤 5개 -->
-                <li class="page-menu"
-                    th:each="pageNum : ${#numbers.sequence(
+                            <ul class="pagination justify-content-center">
+                                <!-- 처음 페이지 버튼 -->
+                                <li class="page-menu" th:classappend="${qnaDTOList.number == 0} ? 'disabled'">
+                                    <a class="page-link" th:href="@{/members/qna/list?page=0}">처음</a>
+                                </li>
+
+                                <!-- 이전 페이지 버튼 -->
+                                <li class="page-menu" th:classappend="${!qnaDTOList.hasPrevious()} ? 'disabled'">
+                                    <a class="page-link" th:href="@{/members/qna/list?page={prev}(prev=${qnaDTOList.number - 1})}">이전</a>
+                                </li>
+
+                                <!-- 현재 페이지 기준 앞 4개, 뒤 5개 -->
+                                <li class="page-menu"
+                                    th:each="pageNum : ${#numbers.sequence(
                                 (qnaDTOList.number - 4 > 0 ? qnaDTOList.number - 4 : 0),
                                 (qnaDTOList.number + 5 < qnaDTOList.totalPages - 1 ? qnaDTOList.number + 5 : qnaDTOList.totalPages - 1)
                                 )}"
-                    th:classappend="${pageNum == qnaDTOList.number} ? 'active'">
-                    <a class="page-link" th:href="@{/qna/list?page={p}(p=${pageNum})}" th:text="${pageNum + 1}"></a>
-                </li>
+                                    th:classappend="${pageNum == qnaDTOList.number} ? 'active'">
+                                    <a class="page-link" th:href="@{/members/qna/list?page={p}(p=${pageNum})}" th:text="${pageNum + 1}"></a>
+                                </li>
 
-                <!-- 다음 페이지 버튼 -->
-                <li class="page-menu" th:classappend="${!qnaDTOList.hasNext()} ? 'disabled'">
-                    <a class="page-link" th:href="@{/qna/list?page={next}(next=${qnaDTOList.number + 1})}">다음</a>
-                </li>
+                                <!-- 다음 페이지 버튼 -->
+                                <li class="page-menu" th:classappend="${!qnaDTOList.hasNext()} ? 'disabled'">
+                                    <a class="page-link" th:href="@{/members/qna/list?page={next}(next=${qnaDTOList.number + 1})}">다음</a>
+                                </li>
 
-                <!-- 마지막 페이지 버튼 -->
-                <li class="page-menu" th:classappend="${qnaDTOList.number == qnaDTOList.totalPages - 1} ? 'disabled'">
-                    <a class="page-link" th:href="@{/qna/list?page={last}(last=${qnaDTOList.totalPages - 1})}">마지막</a>
-                </li>
-            </ul>
+                                <!-- 마지막 페이지 버튼 -->
+                                <li class="page-menu" th:classappend="${qnaDTOList.number == qnaDTOList.totalPages - 1} ? 'disabled'">
+                                    <a class="page-link" th:href="@{/members/qna/list?page={last}(last=${qnaDTOList.totalPages - 1})}">마지막</a>
+                                </li>
+                            </ul>
 
 
-            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+                            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+
 
         </div>
-    </div>
+    </main>
+
+    <!--스크립트 영역-->
+    <!--추가할 스크립트가 있다면 이곳에서 <script>태그 열고 작업-->
+    <!--기존 config 파일과 겹칠 수 있으므로 class나 id는 직접 작명해주세요-->
 
 
+    <!--푸터-->
+    <!--콘텐츠 내부에 포함된 형식이므로 첨삭 엄금!!!-->
+    <div th:replace="~{fragments/adminfooter::adminFooter}"></div>
 </div>
+
+
 
 </body>
 </html>
